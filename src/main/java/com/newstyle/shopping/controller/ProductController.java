@@ -2,6 +2,7 @@ package com.newstyle.shopping.controller;
 
 import com.newstyle.shopping.model.Product;
 import com.newstyle.shopping.repository.ProductRepository;
+import com.newstyle.shopping.servise.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+    
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private ProductService productService;
+    
+    @GetMapping("/search")
+    public List<Product> searchProducts(@RequestParam("name") String name) {
+        return productService.searchProducts(name);
+    }
     
     @GetMapping
     public List<Product> getAllProducts() {
